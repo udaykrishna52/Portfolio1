@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uday Krishna Seetha — Cloud-Native Backend & Full-Stack Engineer</title>
+  <meta name="description" content="Portfolio of Uday Krishna Seetha, a Cloud-Native Backend & Full-Stack Engineer specializing in distributed systems, AWS, DevOps, and secure, scalable backend architectures.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand">Uday Krishna Seetha</a>
+      <nav class="nav">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#certs">Certifications</a>
+        <a href="#links">Links</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-content">
+        <h1>Cloud-Native Backend Engineer | Distributed Systems | AWS | DevOps</h1>
+        <p class="subtext">“I design and build scalable, secure, high-performance backend systems using modern cloud and microservices architectures.”</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn ghost" href="https://github.com/udaykrishna52" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/udaykrishna52/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-value">99.99%</div>
+            <div class="metric-label">Uptime Targets</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">p95 < 150ms</div>
+            <div class="metric-label">Service Latency</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">SLA/SLO</div>
+            <div class="metric-label">Reliability Focus</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section container">
+      <h2>About</h2>
+      <div class="prose">
+        <p>I am a backend-first engineer with a cloud-native mindset, focused on building robust distributed systems with reliability, security, and performance as core principles. I design APIs, orchestrate data pipelines, and architect microservices on AWS with automation and observability built in.</p>
+        <p>Education: B.Tech, KL University — GPA 9.1.</p>
+        <ul class="pill-list">
+          <li class="pill">Security-first</li>
+          <li class="pill">Scalable-by-design</li>
+          <li class="pill">Automation & CI/CD</li>
+          <li class="pill">Observability</li>
+          <li class="pill">Cost-aware</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="projects" class="section container">
+      <h2>Core Projects</h2>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Decentralized Healthcare Management System</h3>
+          <div class="stack">
+            <span>Node.js</span><span>RBAC</span><span>Secure APIs</span>
+          </div>
+        </div>
+        <p class="project-summary">HIPAA-grade authorization, secure data exchange, and auditability across distributed services.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Overview</h4>
+            <pre class="diagram"><code>Client → API Gateway → Auth Service → Healthcare Services
+                       ↘ Audit Log → Immutable Store
+Data Store: Encrypted at rest (KMS), row-level access policies
+Observability: Centralized logging + metrics + traces</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Strict RBAC with scoped JWT claims, short-lived tokens, rotation.</li>
+              <li>Zero-trust service-to-service auth with mTLS between microservices.</li>
+              <li>Schema validation at ingress; PII tokenization for non-prod.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Horizontally scalable stateless services behind gateway.</li>
+              <li>WAF + rate-limiting; anomaly detection on auth events.</li>
+              <li>Encrypted backups, retention policies, audited access trails.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Cloud-Native ETL & Data Orchestrator</h3>
+          <div class="stack">
+            <span>AWS Glue</span><span>Lambda</span><span>S3</span><span>Spring Boot</span>
+          </div>
+        </div>
+        <p class="project-summary">Automated ingestion, validation, and transformation with event-driven scaling.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Overview</h4>
+            <pre class="diagram"><code>Producers → S3 (raw) → Event → Lambda → Validation → Glue Jobs → S3 (curated)
+                                  ↘ Dead-letter + Alerts
+Metadata: Data Catalog; Idempotent runs with checkpointing</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Schema registry for contracts; reject or quarantine invalid data.</li>
+              <li>Checkpointed batch jobs; deterministic transforms for reproducibility.</li>
+              <li>Cost guardrails with job timeout, tiered storage, and tagging.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Event-driven parallelism; autoscaling workers.</li>
+              <li>Fine-grained IAM; KMS encryption; VPC endpoints for data paths.</li>
+              <li>Data quality SLAs with alerts and dashboards.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Automated QA Testing Engine</h3>
+          <div class="stack">
+            <span>Python</span><span>GitHub Actions</span><span>CI/CD</span>
+          </div>
+        </div>
+        <p class="project-summary">Continuous testing across services with artifacted reports and quality gates.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Overview</h4>
+            <pre class="diagram"><code>PR Event → CI Pipeline → Test Matrix (unit/integration/e2e)
+Reports → Storage → Status Checks → Deploy on green</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Contract tests for APIs to prevent integration drift.</li>
+              <li>Parallel matrix runs; caching to reduce execution time.</li>
+              <li>Security checks (SAST/Dependency) as mandatory gates.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Sharded test suites; ephemeral preview environments.</li>
+              <li>Signed artifacts; provenance and SBOM checks.</li>
+              <li>Secrets via OIDC; no long-lived credentials.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>High-Concurrency Delivery System</h3>
+          <div class="stack">
+            <span>Golang</span><span>Microservices</span>
+          </div>
+        </div>
+        <p class="project-summary">Low-latency order routing and dispatch with backpressure and resilience patterns.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Overview</h4>
+            <pre class="diagram"><code>Clients → API → Dispatcher → Workers
+           ↘ Cache/Queue ↔ Rate Limiter ↔ Telemetry</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Work-stealing pools; bounded queues with backpressure.</li>
+              <li>Retry with jitter; circuit breakers; load-shed on saturation.</li>
+              <li>Hot-path caching and eventual consistency where acceptable.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Horizontal sharding; idempotent handlers.</li>
+              <li>mTLS between services; least-privilege IAM for data paths.</li>
+              <li>p95 latency budgets with SLO error budgets tracking.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="concepts" class="section container">
+      <h2>Concept + Implementation Projects</h2>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Cloud-Native Authentication & Authorization Service</h3>
+          <div class="stack">
+            <span>JWT</span><span>OAuth2</span><span>RBAC</span>
+          </div>
+        </div>
+        <p class="project-summary">Centralized auth for microservices with token introspection and policy enforcement.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Diagram</h4>
+            <pre class="diagram"><code>Apps → Gateway → Authn (OIDC) → Token Service → Policy Engine (OPA)
+                               ↘ Session Store (short TTL)</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Short-lived access tokens; refresh via rotating refresh tokens.</li>
+              <li>OPA-based policy bundles; per-tenant RBAC.</li>
+              <li>Key rotation with JWKS; token revocation lists.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Stateless token verification on edges for scale.</li>
+              <li>HSM-backed signing; audit trails for access decisions.</li>
+              <li>Tenant isolation and rate limits per client.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Distributed Rate Limiter & API Gateway</h3>
+          <div class="stack">
+            <span>Redis</span><span>Throttling</span>
+          </div>
+        </div>
+        <p class="project-summary">Protects APIs at scale with token-bucket, sliding-window, and burst handling.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Diagram</h4>
+            <pre class="diagram"><code>Clients → Edge → Gateway → Limiter Cluster (Redis)
+                        ↘ Metrics/Tracing</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Consistent hashing for sharding keys across nodes.</li>
+              <li>Scripted atomics in Redis for accuracy under contention.</li>
+              <li>Quota management per API key and tenant.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Horizontal scale-out; multi-DC replication.</li>
+              <li>WAF integration; abuse detection and automatic bans.</li>
+              <li>Signed client requests; HSTS and TLS 1.2+ enforced.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>AWS Cost Optimization Dashboard</h3>
+          <div class="stack">
+            <span>AWS Billing</span><span>Analytics</span><span>Alerts</span>
+          </div>
+        </div>
+        <p class="project-summary">Visibility into spend with budgets, anomalies, and actionable insights.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Diagram</h4>
+            <pre class="diagram"><code>CUR → Data Lake → Transform → Metrics API → Dashboard
+Budgets/Anomaly Detector → Notifications</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Tagging standards for cost allocation.</li>
+              <li>Right-sizing and RI/SP coverage tracking.</li>
+              <li>Alerting thresholds per team and environment.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Multi-account ingestion; cross-account roles.</li>
+              <li>KMS encryption; least-privilege access to cost data.</li>
+              <li>Data retention and rollups for long-term trends.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-head">
+          <h3>Secure File Storage Service</h3>
+          <div class="stack">
+            <span>S3</span><span>Encryption</span><span>Access Policies</span>
+          </div>
+        </div>
+        <p class="project-summary">Encrypted object storage with signed URLs and granular access control.</p>
+        <div class="project-grid">
+          <div class="project-section">
+            <h4>Architecture Diagram</h4>
+            <pre class="diagram"><code>Client → Upload API → Signed URL → S3 (KMS)
+                     ↘ Scanner → Quarantine | Curated</code></pre>
+          </div>
+          <div class="project-section">
+            <h4>Engineering Decisions</h4>
+            <ul class="bullets">
+              <li>Pre-signed operations; minimal surface area for direct access.</li>
+              <li>Malware scanning on ingest; quarantine workflow.</li>
+              <li>Per-tenant buckets/prefixes with lifecycle rules.</li>
+            </ul>
+          </div>
+          <div class="project-section">
+            <h4>Scalability & Security</h4>
+            <ul class="bullets">
+              <li>Multipart uploads; parallel downloads with range requests.</li>
+              <li>Strong server-side and optional client-side encryption.</li>
+              <li>Comprehensive audit logs and access transparency.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="skills" class="section container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-col">
+          <h4>Languages</h4>
+          <div class="tags"><span>Python</span><span>JavaScript</span><span>Java</span><span>Go</span><span>SQL</span><span>C</span></div>
+        </div>
+        <div class="skill-col">
+          <h4>Backend</h4>
+          <div class="tags"><span>Node.js</span><span>Django</span><span>Spring Boot</span><span>REST APIs</span><span>Microservices</span></div>
+        </div>
+        <div class="skill-col">
+          <h4>Cloud & DevOps</h4>
+          <div class="tags"><span>AWS</span><span>Docker</span><span>CI/CD</span><span>GitHub Actions</span></div>
+        </div>
+        <div class="skill-col">
+          <h4>Data</h4>
+          <div class="tags"><span>ETL</span><span>Data Modeling</span><span>Validation</span></div>
+        </div>
+        <div class="skill-col">
+          <h4>Security</h4>
+          <div class="tags"><span>RBAC</span><span>API Security</span></div>
+        </div>
+        <div class="skill-col">
+          <h4>Frontend</h4>
+          <div class="tags"><span>React</span><span>Tailwind CSS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certs" class="section container">
+      <h2>Certifications</h2>
+      <ul class="cert-list">
+        <li>AWS Cloud Practitioner</li>
+        <li>Red Hat Certified Enterprise Application Developer</li>
+        <li>Salesforce Generative AI</li>
+        <li>Docker & Kubernetes for Developers</li>
+      </ul>
+    </section>
+
+    <section id="links" class="section container">
+      <h2>Links</h2>
+      <div class="links">
+        <a class="link-card" href="https://github.com/udaykrishna52" target="_blank" rel="noreferrer">
+          <span>GitHub</span>
+          <span class="mono">github.com/udaykrishna52</span>
+        </a>
+        <a class="link-card" href="https://www.linkedin.com/in/udaykrishna52/" target="_blank" rel="noreferrer">
+          <span>LinkedIn</span>
+          <span class="mono">linkedin.com/in/udaykrishna52</span>
+        </a>
+        <a class="link-card" href="mailto:udaykrishna.seetha@example.com">
+          <span>Email</span>
+          <span class="mono">udaykrishna.seetha@example.com</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© <span id="year"></span> Uday Krishna Seetha</div>
+      <div class="footer-links">
+        <a href="mailto:udaykrishna.seetha@example.com">Email</a>
+        <a href="https://github.com/udaykrishna52" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/udaykrishna52/" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
