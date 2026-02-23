@@ -1,6 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '../hooks/useChat';
 
+// Simple markdown formatter
+const formatMarkdown = (text: string) => {
+  return text
+    // Headers
+    .replace(/^### (.*$)/gim, '<h3 style="margin: 16px 0 8px 0; color: var(--accent); font-size: 16px; font-weight: 600;">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 style="margin: 20px 0 12px 0; color: var(--accent); font-size: 18px; font-weight: 700;">$1</h2>')
+    // Bold text
+    .replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--accent); font-weight: 600;">$1</strong>')
+    // Line breaks
+    .replace(/\n\n/g, '<br /><br />')
+    .replace(/\n/g, '<br />');
+};
+
 const suggestedQuestions = [
   "What are Uday's main skills?",
   "Tell me about the voting system project",
@@ -162,10 +175,11 @@ const ChatSection: React.FC = () => {
                   fontSize: '14px',
                   color: msg.role === 'user' ? 'white' : 'var(--text2)',
                   lineHeight: 1.7,
-                  whiteSpace: 'pre-wrap',
-                }}>
-                  {msg.content}
-                </div>
+                }}
+                dangerouslySetInnerHTML={{ 
+                  __html: msg.role === 'assistant' ? formatMarkdown(msg.content) : msg.content 
+                }}
+                />
                 {msg.role === 'user' && (
                   <div style={{
                     width: '32px',

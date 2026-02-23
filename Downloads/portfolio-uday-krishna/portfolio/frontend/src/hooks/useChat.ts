@@ -38,10 +38,45 @@ export const useChat = () => {
       if (!response.ok) throw new Error('Failed to get response');
       const data = await response.json();
 
+      // Format the structured response into a readable message
+      let formattedContent = '';
+      
+      if (data.response) {
+        formattedContent = data.response;
+      } else if (data.skills) {
+        formattedContent = "## Uday's Technical Skills\n\n";
+        Object.entries(data.skills).forEach(([category, skills]) => {
+          formattedContent += `**${category}**: ${Array.isArray(skills) ? skills.join(', ') : skills}\n\n`;
+        });
+      } else if (data.projects) {
+        formattedContent = "## Uday's Projects\n\n";
+        if (data.projects.featured_projects) {
+          data.projects.featured_projects.forEach((project: any, index: number) => {
+            formattedContent += `### ${project.name}\n`;
+            formattedContent += `**Description**: ${project.description}\n`;
+            formattedContent += `**Technologies**: ${project.tech.join(', ')}\n`;
+            formattedContent += `**Status**: ${project.status}\n\n`;
+          });
+        }
+      } else if (data.education) {
+        formattedContent = "## Uday's Education\n\n";
+        Object.entries(data.education).forEach(([level, details]: [string, any]) => {
+          formattedContent += `### ${level.toUpperCase()}\n`;
+          Object.entries(details).forEach(([key, value]) => {
+            if (key !== 'btech' && key !== 'intermediate' && key !== 'ssc') {
+              formattedContent += `**${key.charAt(0).toUpperCase() + key.slice(1)}**: ${value}\n`;
+            }
+          });
+          formattedContent += '\n';
+        });
+      } else {
+        formattedContent = "I'm Uday's AI assistant! I can provide information about his skills, projects, education, and experience. Ask me about any specific aspect!";
+      }
+
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response,
+        content: formattedContent,
         timestamp: new Date(),
       };
 

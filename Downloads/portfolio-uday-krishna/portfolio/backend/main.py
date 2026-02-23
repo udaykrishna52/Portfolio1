@@ -165,9 +165,13 @@ class ChatRequest(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    response: str
+    response: Optional[str] = None
     session_id: str
     model: str
+    skills: Optional[dict] = None
+    projects: Optional[dict] = None
+    experience: Optional[dict] = None
+    education: Optional[dict] = None
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -183,66 +187,87 @@ async def health():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest):
-    if not OPENROUTER_API_KEY:
-        raise HTTPException(
-            status_code=503,
-            detail="OpenRouter API key not configured. Please set OPENROUTER_API_KEY in .env"
-        )
-
     session_id = req.session_id or str(uuid.uuid4())
-
-    # Build messages for the API
-    messages = [{"role": "system", "content": RESUME_CONTEXT}]
-
-    # Add conversation history (last 6 turns)
-    for h in (req.history or [])[-6:]:
-        messages.append({"role": h.role, "content": h.content})
-
-    # Add current user message
-    messages.append({"role": "user", "content": req.message})
-
-    # Persist user message
-    await save_message(session_id, "user", req.message)
-
-    # Call OpenRouter
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        try:
-            resp = await client.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": "https://udaykrishna.dev",
-                    "X-Title": "Uday Krishna Portfolio",
+    
+    # Analyze the user's message to determine what information to return
+    message_lower = req.message.lower()
+    
+    # Return structured data based on the query
+    if "skill" in message_lower:
+        return ChatResponse(
+            session_id=session_id,
+            model="structured-response",
+            skills={
+                "Frontend": ["React.js", "HTML", "CSS", "JavaScript", "TypeScript", "Next.js"],
+                "Backend": ["Java", "Python", "Node.js", "Django", "Spring Boot", "REST APIs", "FastAPI"],
+                "Databases": ["SQL", "MongoDB", "SQLite", "PostgreSQL"],
+                "Cloud": ["AWS EC2", "S3", "Lambda"],
+                "Security": ["JWT", "API Security", "RBAC", "Cyber Security"],
+                "Tools": ["Git", "GitHub", "Docker", "CI/CD"],
+                "Languages": ["C", "Java", "Python", "JavaScript", "TypeScript"]
+            }
+        )
+    elif "project" in message_lower:
+        return ChatResponse(
+            session_id=session_id,
+            model="structured-response",
+            projects={
+                "featured_projects": [
+                    {
+                        "name": "Portfolio Website",
+                        "description": "Personal portfolio with AI chat assistant",
+                        "tech": ["React", "FastAPI", "TypeScript", "Tailwind CSS"],
+                        "status": "Completed"
+                    },
+                    {
+                        "name": "E-Commerce Platform",
+                        "description": "Full-stack e-commerce solution",
+                        "tech": ["React", "Node.js", "MongoDB", "Stripe API"],
+                        "status": "In Progress"
+                    }
+                ]
+            }
+        )
+    elif "experience" in message_lower or "education" in message_lower:
+        return ChatResponse(
+            session_id=session_id,
+            model="structured-response",
+            education={
+                "btech": {
+                    "degree": "B.Tech CSE",
+                    "university": "KL Deemed to be University, AP",
+                    "period": "Jul 2022 – Jun 2026",
+                    "cgpa": "9.01/10",
+                    "specialization": "Cyber Security & Blockchain Technology"
                 },
-                json={
-                    "model": OPENROUTER_MODEL,
-                    "messages": messages,
-                    "max_tokens": 600,
-                    "temperature": 0.7,
+                "intermediate": {
+                    "college": "Sri Chaitanya Junior College, AP",
+                    "period": "Jul 2020 – May 2022",
+                    "cgpa": "8.9/10"
                 },
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            ai_response = data["choices"][0]["message"]["content"]
-            model_used = data.get("model", OPENROUTER_MODEL)
-
-        except httpx.HTTPStatusError as e:
-            # For testing purposes, return a mock response if API key is invalid
-            if "401" in str(e) or "402" in str(e) or "502" in str(e):
-                ai_response = "I'm Uday's AI assistant! Based on his portfolio, Uday Krishna Seetha is a final year B.Tech CSE student specializing in Cyber Security & Blockchain Technology. He has skills in C, Java, Python, React, and web technologies. His CGPA is 9.01/10 and he's available for internships and full-time opportunities. What specific aspect would you like to know more about?"
-                model_used = "mock-response"
-            else:
-                raise HTTPException(status_code=502, detail=f"OpenRouter error: {e.response.text}")
-        except httpx.TimeoutException:
-            raise HTTPException(status_code=504, detail="Request to AI timed out.")
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
-
-    # Persist assistant reply
-    await save_message(session_id, "assistant", ai_response)
-
-    return ChatResponse(response=ai_response, session_id=session_id, model=model_used)
+                "ssc": {
+                    "school": "KrishnaVeni Talent School, AP",
+                    "period": "Jul 2019 – Apr 2020",
+                    "cgpa": "10/10"
+                }
+            }
+        )
+    else:
+        # Default response with general information
+        return ChatResponse(
+            session_id=session_id,
+            model="structured-response",
+            response="I'm Uday's AI assistant! I can provide information about his skills, projects, education, and experience. Ask me about any specific aspect!",
+            skills={
+                "Frontend": ["React.js", "HTML", "CSS", "JavaScript", "TypeScript", "Next.js"],
+                "Backend": ["Java", "Python", "Node.js", "Django", "Spring Boot", "REST APIs", "FastAPI"],
+                "Databases": ["SQL", "MongoDB", "SQLite", "PostgreSQL"],
+                "Cloud": ["AWS EC2", "S3", "Lambda"],
+                "Security": ["JWT", "API Security", "RBAC", "Cyber Security"],
+                "Tools": ["Git", "GitHub", "Docker", "CI/CD"],
+                "Languages": ["C", "Java", "Python", "JavaScript", "TypeScript"]
+            }
+        )
 
 
 @app.get("/api/stats")
